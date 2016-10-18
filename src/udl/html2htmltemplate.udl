@@ -1,0 +1,9 @@
+# html2htmltemplate.udl
+family markup
+
+# Let the standard markup routine handle '<'
+# Here we check to see if there's a 'TMPL' immediately following '<'
+
+state IN_M_DEFAULT:
+'<TMPL_' : paint(upto, M_DEFAULT) => IN_TPL_DEFAULT
+'</TMPL_' : paint(upto, M_DEFAULT) => IN_TPL_DEFAULT

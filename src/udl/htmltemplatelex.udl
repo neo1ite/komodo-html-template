@@ -1,0 +1,24 @@
+# htmltemplatelex.udl
+family tpl
+sublanguage htmltemplate
+
+# We have to specify the min and max styles we'll be referring to
+
+start_style TPL_DEFAULT
+end_style TPL_DEFAULT
+
+pattern NMSTART = '_\w\x80-\xff' # inside cset
+pattern CS = '$NMSTART\d' # inside cset
+pattern VARNAME = '[$NMSTART][$CS]*'
+
+state IN_TPL_DEFAULT:
+
+/\<TMPL_VAR NAME\=\"$VARNAME\"\>/ : paint(include, TPL_DEFAULT) => IN_M_DEFAULT
+/\<TMPL_LOOP NAME\=\"$VARNAME\"\>/ : paint(include, TPL_DEFAULT) => IN_M_DEFAULT
+/\<TMPL_INCLUDE NAME\=\"$VARNAME\"\>/ : paint(include, TPL_DEFAULT) => IN_M_DEFAULT
+/\<TMPL_IF NAME\=\"$VARNAME\"\>/ : paint(include, TPL_DEFAULT) => IN_M_DEFAULT
+/\<TMPL_ELSE\>/ : paint(include, TPL_DEFAULT) => IN_M_DEFAULT
+/\<TMPL_UNLESS NAME\=\"$VARNAME\"\>/ : paint(include, TPL_DEFAULT) => IN_M_DEFAULT
+/\<\/TMPL_LOOP\>/ : paint(include, TPL_DEFAULT) => IN_M_DEFAULT
+/\<\/TMPL_IF\>/ : paint(include, TPL_DEFAULT) => IN_M_DEFAULT
+/\<\/TMPL_UNLESS\>/ : paint(include, TPL_DEFAULT) => IN_M_DEFAULT
